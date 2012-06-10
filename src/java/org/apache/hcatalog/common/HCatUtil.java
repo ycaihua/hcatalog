@@ -188,10 +188,9 @@ public class HCatUtil {
         return client.getTable(dbName, tableName);
     }
 
-    public static HCatSchema getTableSchemaWithPtnCols(Table table)
-            throws IOException {
-        HCatSchema tableSchema = extractSchemaFromStorageDescriptor(table
-                .getSd());
+    public static HCatSchema getTableSchemaWithPtnCols(Table table) throws IOException {
+        HCatSchema tableSchema = new HCatSchema(HCatUtil.getHCatFieldSchemaList(
+                new org.apache.hadoop.hive.ql.metadata.Table(table).getCols()));
 
         if (table.getPartitionKeys().size() != 0) {
 
